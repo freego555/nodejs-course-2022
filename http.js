@@ -24,6 +24,7 @@ module.exports = (routing, port) => {
     if (signature.includes('{')) args.push(await receiveArgs(req));
     console.log(`${socket.remoteAddress} ${method} ${url}`);
     const result = await handler(...args);
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.end(JSON.stringify(result.rows));
   }).listen(port);
 
