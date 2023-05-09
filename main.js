@@ -5,7 +5,6 @@ const path = require('node:path');
 const config = require('./config.js');
 const server = require(`./${config.transport}.js`);
 const staticServer = require('./static.js');
-const load = require('./load.js');
 const db = require('./db.js');
 const hash = require('./hash.js');
 const logger = require('./logger.js');
@@ -24,7 +23,7 @@ const routing = {};
     if (!fileName.endsWith('.js')) continue;
     const filePath = path.join(apiPath, fileName);
     const serviceName = path.basename(fileName, '.js');
-    routing[serviceName] = await load(filePath, sandbox);
+    routing[serviceName] = require(filePath)(sandbox);
   }
 
   staticServer('./static', config.staticServer.port);
