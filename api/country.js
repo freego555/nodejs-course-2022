@@ -14,5 +14,5 @@ module.exports = ({ console, db }) => {
       const sql = 'SELECT * from country where name like $1';
       return country.query(sql, [mask]);
     },
-  }
-}
+  };
+};

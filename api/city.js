@@ -1,5 +1,3 @@
 'use sctrict';
 
-module.exports = ({ console, db }) => {
-  return db('city');
-}
+module.exports = ({ console, db }) => db('city');

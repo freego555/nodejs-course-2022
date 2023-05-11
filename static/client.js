@@ -1,9 +1,11 @@
 'use strict';
 
-const socket = config.apiUrl.startsWith('ws') ? new WebSocket(config.apiUrl) : undefined;
+const socket = config.apiUrl.startsWith('ws') ?
+  new WebSocket(config.apiUrl) :
+  undefined;
 
 const methodForTransport = {
-  http: async function (...args) {
+  async http(...args) {
     const { url, structure, serviceName, methodName } = this;
     const apiUrl = [url, serviceName, methodName];
     let body;
@@ -13,11 +15,14 @@ const methodForTransport = {
       if (argName === 'record') body = { ...args[i] };
       i++;
     }
-    const response = await fetch(apiUrl.join('/'), { method: 'POST', body: JSON.stringify(body) });
+    const response = await fetch(apiUrl.join('/'), {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
     return response.json();
   },
 
-  ws: function (...args) {
+  ws(...args) {
     return new Promise((resolve) => {
       const { serviceName, methodName } = this;
       const packet = { name: serviceName, method: methodName, args };
@@ -26,7 +31,7 @@ const methodForTransport = {
         const data = JSON.parse(event.data);
         resolve(data);
       };
-    })
+    });
   },
 };
 
@@ -44,7 +49,8 @@ const scaffold = (url, structure) => {
     const methods = Object.keys(service);
     for (const methodName of methods) {
       const context = { url, structure, serviceName, methodName };
-      api[serviceName][methodName] = methodForTransport[transportName].bind(context);
+      api[serviceName][methodName] =
+        methodForTransport[transportName].bind(context);
     }
   }
   return api;

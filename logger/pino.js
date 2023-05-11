@@ -8,12 +8,14 @@ class Pino {
     this.path = path;
 
     const date = new Date().toISOString().substring(0, 10);
-    this.fileStream = fs.createWriteStream(`${path}/${date}.log`, { flags: 'a' });
+    this.fileStream = fs.createWriteStream(`${path}/${date}.log`, {
+      flags: 'a',
+    });
 
     const streams = [
       { stream: this.fileStream },
       { stream: process.stdout },
-    ]
+    ];
     this.logger = pino({ level: 'debug' }, pino.multistream(streams));
   }
 
