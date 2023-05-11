@@ -11,9 +11,11 @@ const staticServer = require('./static.js')({
   console: Object.freeze(logger),
 });
 const db = require('./db.js')({
+  config: config.db,
   console: Object.freeze(logger),
 });
 const hash = require('./hash.js')({
+  config: config.hash,
   console: Object.freeze(logger),
 });
 
