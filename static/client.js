@@ -60,8 +60,12 @@ const api = scaffold(config.apiUrl, {
   },
   country: {
     read: ['id'],
+    update: ['id', 'record'],
     delete: ['id'],
     find: ['mask'],
+  },
+  city: {
+    read: ['id'],
   },
 });
 
