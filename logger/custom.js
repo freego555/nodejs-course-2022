@@ -68,4 +68,19 @@ class Logger {
   }
 }
 
-module.exports = new Logger('./log');
+class LoggerWrapper {
+  constructor(path) {
+    this.path = path;
+    this.logger = new Logger(path);
+  }
+
+  close() {
+    return this.logger.close();
+  }
+
+  log(...args) {
+    this.logger.log(...args);
+  }
+}
+
+module.exports = (options) => new LoggerWrapper(options.path);

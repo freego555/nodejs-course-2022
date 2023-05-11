@@ -11,7 +11,7 @@ const pool = new pg.Pool({
   password: config.db.password,
 });
 
-module.exports = (table) => ({
+module.exports = ({ console }) => (table) => ({
   query(sql, args) {
     return pool.query(sql, args);
   },

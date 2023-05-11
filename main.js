@@ -3,11 +3,19 @@
 const fsp = require('node:fs').promises;
 const path = require('node:path');
 const config = require('./config.js');
-const server = require(`./${config.transport}.js`);
-const staticServer = require('./static.js');
-const db = require('./db.js');
-const hash = require('./hash.js');
-const logger = require('./logger.js');
+const logger = require(`./logger/${config.logger.name}.js`)(config.logger);
+const server = require(`./${config.transport}.js`)({
+  console: Object.freeze(logger),
+});
+const staticServer = require('./static.js')({
+  console: Object.freeze(logger),
+});
+const db = require('./db.js')({
+  console: Object.freeze(logger),
+});
+const hash = require('./hash.js')({
+  console: Object.freeze(logger),
+});
 
 const sandbox = {
   console: Object.freeze(logger),
