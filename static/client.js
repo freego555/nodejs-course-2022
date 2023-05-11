@@ -32,8 +32,8 @@ const methodForTransport = {
 
 const scaffold = (url, structure) => {
   let transportName = '';
-  if (url.startsWith('http')) transportName = 'http';
-  else if (url.startsWith('ws')) transportName = 'ws';
+  if (url.startsWith('http:')) transportName = 'http';
+  else if (url.startsWith('ws:')) transportName = 'ws';
   else throw new Error('Unknown transport protocol');
 
   const api = {};

@@ -4,7 +4,7 @@ const fsp = require('node:fs').promises;
 const path = require('node:path');
 const config = require('./config.js');
 const logger = require(`./logger/${config.logger.name}.js`)(config.logger);
-const server = require(`./${config.transport}.js`)({
+const server = require(`./${config.apiServer.transport}.js`)({
   console: Object.freeze(logger),
 });
 const staticServer = require('./static.js')({
