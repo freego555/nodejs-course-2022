@@ -4,9 +4,11 @@ const fsp = require('node:fs').promises;
 const path = require('node:path');
 const config = require('./config.js');
 const logger = require(`./logger/${config.logger.name}.js`)(config.logger);
-const server = require(`./${config.apiServer.transport}.js`)({
-  console: Object.freeze(logger),
-});
+const server =
+  require(`./transport/${config.apiServer.transport}-${config.apiServer.framework}.js`)({
+    config: config.apiServer,
+    console: Object.freeze(logger),
+  });
 const staticServer = require('./static.js')({
   console: Object.freeze(logger),
 });
