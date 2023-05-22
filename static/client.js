@@ -8,7 +8,7 @@ const methodForTransport = {
   async http(...args) {
     const { url, structure, serviceName, methodName } = this;
     const apiUrl = [url, serviceName, methodName];
-    let body;
+    let body = {};
     let i = 0;
     for (const argName of structure[serviceName][methodName]) {
       if (argName === 'id') apiUrl.push(args[i]);
@@ -17,6 +17,7 @@ const methodForTransport = {
     }
     const response = await fetch(apiUrl.join('/'), {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
     return response.json();
